@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "outDir": "lib",
+    "target": "es2015",
+    "module": "CommonJS",
+    "removeComments": true,
+    "allowJs": true,
+    "strict": true,
+    "lib": ["es2015"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.spec.ts*", "src/__mocks__", "src/__snapshots__", "src/functional"]
+}
