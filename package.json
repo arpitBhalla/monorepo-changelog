@@ -7,7 +7,6 @@
     "lerna"
   ],
   "license": "MIT",
-  "author": "Bo Borgerson <gigabo@gmail.com>",
   "scripts": {
     "build": "yarn clean && tsc",
     "changelog": "node ./bin/cli.js",

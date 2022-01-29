@@ -19,3 +19,9 @@ The time we greeted you.
 uses: actions/hello-world-javascript-action@v1.1
 with:
 who-to-greet: 'Mona the Octocat'
+
+## Credits
+
+- Core parts of the PR fetching logic are based on [lerna-changelog](https://github.com/lerna/lerna-changelog)
+  Bo Borgerson - GitHub
+  action-gh-release for a few great README ideas

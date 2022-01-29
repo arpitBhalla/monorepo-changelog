@@ -1,13 +1,39 @@
-name: "Lerna Changelog"
+name: "Lerna Changelog Action"
 description: "Lerna Monorepo Changelog Generator"
 inputs:
   who-to-greet: # id of input
     description: "Who to greet"
     required: true
     default: "World"
+  from:
+    description: "A commit SHA or tag"
+    required: false
+  to:
+    description: "A commit SHA or tag"
+    required: false
+    default: HEAD
+  template:
+    description: "Handlebar template for changelog"
+    required: false
+  nextVersion:
+    description: "Version name for next release"
+    required: false
+    default: "Unreleased"
+  # groupBy:
+  #   description: "label | scope"
+  #   required: false
+  #   default: "scopes"
+  language:
+    description: "Language of changelog"
+    required: false
+    default: "Markdown"
+  repo:
+    description: ""
+    required: false
+author: "Arpit Bhalla"
 outputs:
-  time: # id of output
-    description: "The time we greeted you"
+  changelog:
+    description: "Markdown"
 runs:
   using: "node16"
-  main: "bin/cli.js"
+  main: "lib/index.js"
