@@ -5,19 +5,13 @@ Use `lerna-changelog` in GitHub action.
 ## Usage
 
 ```yml
-# .github/workflows/changelog.yml
-steps:
-  # To reference old commits, fetch-depth: 0 is required.
-  - uses: actions/checkout@v2
-    with:
-      fetch-depth: 0
-  - uses: arpitBhalla/{{repo}}@master
-    id: changelog
-    with:
-      GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
-      from: "1.2.0"
-  - run: echo "${{steps.changelog.outputs.markdown}}"
+- uses: arpitBhalla/{{repo}}@master
+  with:
+    GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
+    from: "1.2.0"
 ```
+
+See [example](#example)
 
 ## Configuration
 
@@ -68,7 +62,7 @@ You can configure by adding a changelog key to the package.json file of your pro
 
 ## Example
 
-### Action settings
+### Github Action
 
 ```yml
 # .github/workflows/changelog.yml
@@ -116,14 +110,21 @@ jobs:
 ```md
 ## Unreleased (2021-05-27)
 
-#### Feature
+### Feature
+
+#### \`Native App\`
 
 - [#18](https://github.com/{{owner}}/{{repo}}/pull/18) chore(yarn): add lerna-changelog ([@{{owner}}](https://github.com/{{owner}}))
 
-#### Maintenance
+### Maintenance
+
+#### \`Native App\`
 
 - [#1](https://github.com/{{owner}}/{{repo}}/pull/1) Bump @types/node from 14.14.9 to 15.3.0 ([@dependabot[bot]](https://github.com/apps/dependabot))
 - [#2](https://github.com/{{owner}}/{{repo}}/pull/2) Bump @actions/core from 1.2.6 to 1.2.7 ([@dependabot[bot]](https://github.com/apps/dependabot))
+
+#### \`Docs\`
+
 - [#3](https://github.com/{{owner}}/{{repo}}/pull/3) Bump eslint-plugin-jest from 24.1.3 to 24.3.6 ([@dependabot[bot]](https://github.com/apps/dependabot))
 
 Thanks to 1 contributors namely [@arpitBhalla](https://github.com/arpitBhalla)
@@ -133,13 +134,14 @@ Thanks to 1 contributors namely [@arpitBhalla](https://github.com/arpitBhalla)
 
 ### Template configuration
 
-```md
-
-```
+| Key      | Description           |
+| -------- | --------------------- |
+| `labels` | Map of label to scope |
+| `scopes` | Map of scope to label |
 
 ### Default Template
 
-```hbs
+```handlebars
 {{#each .}}
 
 ## {{releaseTitle}}
@@ -167,10 +169,6 @@ Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{log
 ```
 
 ### Output for this template
-
-```md
-
-```
 
 ## Acknowledgements
 
