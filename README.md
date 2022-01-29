@@ -5,7 +5,7 @@ Use `lerna-changelog` in GitHub action.
 ## Usage
 
 ```yml
-- uses: arpitBhalla/{{repo}}@master
+- uses: arpitBhalla/lerna-changelog-action@master
   with:
     GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
     from: "1.2.0"
@@ -79,7 +79,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: arpitBhalla/{{repo}}@master
+      - uses: arpitBhalla/lerna-changelog-action@master
         id: changelog
         with:
           GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
