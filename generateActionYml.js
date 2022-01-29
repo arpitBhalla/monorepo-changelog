@@ -6,7 +6,7 @@ const TAB = "  ";
 /**
  * Action YML
  */
-let YMLFormat = `name: "Changelog Action for monorepo"
+let YMLFormat = `name: "Generate changelog for multi-scope projects (monorepos) lerna supported"
 description: "Lerna Monorepo Changelog Generator"
 author: "arpitBhalla"
 branding:

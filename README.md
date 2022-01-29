@@ -1,6 +1,6 @@
-# Changelog Action for monorepo
+# Generate changelog for multi-scope projects
 
-Use lerna-changelog in GitHub action.
+Use `lerna-changelog` in GitHub action.
 
 ## Usage
 
@@ -21,19 +21,42 @@ steps:
 
 ## Configuration
 
+You can configure by adding a changelog key to the package.json file of your project:
+
+```jsonc
+// ./package.json
+{
+  // ...
+  "changelog": {
+    "labels": {
+      "PR: Breaking Change": "Breaking Change",
+      "PR: Feature": "Feature",
+      "PR: Bug": "Bug fix",
+      "PR: Maintenance": "Maintenance",
+      "PR: Docs": "Docs",
+      "PR: Refactoring": "Refactoring"
+    },
+    "scopes": {
+      "native-app": "Native App",
+      "website/docs": "Docs"
+    }
+  }
+}
+```
+
 <!--input-start--->
 
 ### Input
 
-| Action                       | Description                                     | Default           |
-| ---------------------------- | ----------------------------------------------- | ----------------- |
-| `GITHUB_AUTH` **(required)** | Personal Access Token with read permission      |                   |
-| `from`                       | The current version of the project.(SHA or Tag) |                   |
-| `to`                         | The next version of the project.(SHA or Tag)    |                   |
-| `template`                   | Handlebar template for Changelog                | `DefaultTemplate` |
-| `version_name`               | Version Name for current release                | `Unreleased`      |
-| `repo`                       | Url of repo                                     |                   |
-| `language`                   | Language of the changelog                       | `Markdown`        |
+| Action                       | Description                                                                   | Default           |
+| ---------------------------- | ----------------------------------------------------------------------------- | ----------------- |
+| `GITHUB_AUTH` **(required)** | Personal Access Token with read permission                                    |                   |
+| `from`                       | The current version of the project (SHA or Tag)                               |                   |
+| `to`                         | The next version of the project (SHA or Tag)                                  |                   |
+| `template`                   | Handlebar template for Changelog                                              | `DefaultTemplate` |
+| `version_name`               | Title for unreleased commits (e.g. Unreleased)                                | `Unreleased`      |
+| `repo`                       | Your `org/repo` on GitHub (automatically inferred from the package.json file) |                   |
+| `language`                   | Language of the changelog                                                     | `Markdown`        |
 
 ### Output
 
@@ -106,35 +129,15 @@ jobs:
 Thanks to 1 contributors namely [@arpitBhalla](https://github.com/arpitBhalla)
 ```
 
-### PR Labels (from package.json or lerna.json)
+## Template for Changelog
 
-```jsonc
-{
-  "changelog": {
-    "labels": {
-      "PR: Breaking Change": "Breaking Change",
-      "PR: Feature": "Feature",
-      "PR: Bug": "Bug fix",
-      "PR: Maintenance": "Maintenance",
-      "PR: Docs": "Docs",
-      "PR: Refactoring": "Refactoring"
-    },
-    "scopes": {
-      "native-app": "Native App",
-      "website/docs": "Docs"
-    }
-  }
-}
+### Template configuration
+
+```md
+
 ```
 
-## Template
-
-<table>
-<tr>
-<td> Template </td> <td> Output </td>
-</tr>
-<tr>
-<td>
+### Default Template
 
 ```hbs
 {{#each .}}
@@ -155,7 +158,7 @@ __{{releaseDate}}__
 - [#{{id}}]({{html_url}}) {{title}} by @{{author}}
 {{/each}}
 {{/each}}
----
+
 {{/each}}
 
 Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{login}}]({{url}}){{#unless @last}},{{/unless}} {{/each}}
@@ -163,17 +166,11 @@ Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{log
 {{/each }}
 ```
 
-</td>
-
-<td>
+### Output for this template
 
 ```md
 
 ```
-
-</td>
-</tr>
-</table>
 
 ## Acknowledgements
 

@@ -1,4 +1,4 @@
-name: "Changelog Action for monorepo"
+name: "Generate changelog for multi-scope projects (monorepos) lerna supported"
 description: "Lerna Monorepo Changelog Generator"
 author: "arpitBhalla"
 branding:
@@ -10,11 +10,11 @@ inputs:
     required: true
     default: ""
   from:
-    description: "The current version of the project.(SHA or Tag)"
+    description: "The current version of the project (SHA or Tag)"
     required: false
     default: ""
   to:
-    description: "The next version of the project.(SHA or Tag)"
+    description: "The next version of the project (SHA or Tag)"
     required: false
     default: ""
   template:
@@ -22,11 +22,11 @@ inputs:
     required: false
     default: "DefaultTemplate"
   version_name:
-    description: "Version Name for current release"
+    description: " Title for unreleased commits (e.g. Unreleased)"
     required: false
     default: "Unreleased"
   repo:
-    description: "Url of repo"
+    description: "Your `org/repo` on GitHub (automatically inferred from the package.json file)"
     required: false
     default: ""
   language:

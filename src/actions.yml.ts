@@ -6,7 +6,15 @@ type ActionT = {
   default: string;
 };
 
-export type ActionKeyT = "from" | "to" | "template" | "version_name" | "repo" | "GITHUB_AUTH" | "language";
+export type ActionKeyT =
+  | "from"
+  | "to"
+  | "template"
+  | "version_name"
+  | "repo"
+  | "GITHUB_AUTH"
+  | "language"
+  | "ignoreCommitters";
 
 export const actions: ActionT[] = [
   {
@@ -18,14 +26,14 @@ export const actions: ActionT[] = [
   },
   {
     name: "from",
-    description: "The current version of the project.(SHA or Tag)",
+    description: "The current version of the project (SHA or Tag)",
     type: "string",
     required: false,
     default: "",
   },
   {
     name: "to",
-    description: "The next version of the project.(SHA or Tag)",
+    description: "The next version of the project (SHA or Tag)",
     type: "string",
     required: false,
     default: "",
@@ -39,14 +47,14 @@ export const actions: ActionT[] = [
   },
   {
     name: "version_name",
-    description: "Version Name for current release",
+    description: " Title for unreleased commits (e.g. Unreleased)",
     type: "string",
     required: false,
     default: "Unreleased",
   },
   {
     name: "repo",
-    description: "Url of repo",
+    description: "Your `org/repo` on GitHub (automatically inferred from the package.json file)",
     type: "string",
     required: false,
     default: "",
