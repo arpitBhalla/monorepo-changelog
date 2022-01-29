@@ -1,11 +1,9 @@
-## Generate template based changelog or release-notes for multi-scope projects
-
-Use `lerna-changelog` in GitHub action.
+Generate PR based changelog or release-notes for multi-scope projects with templates
 
 ## Usage
 
 ```yml
-- uses: arpitBhalla/lerna-changelog-action@master
+- uses: arpitBhalla/monorepo-changelog@master
   with:
     GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
     from: "1.2.0"
@@ -52,7 +50,7 @@ You can configure by adding a changelog key to the package.json file of your pro
 | `repo`                       | Your `org/repo` on GitHub (automatically inferred from the package.json file) |                   |
 | `language`                   | Language of the changelog                                                     | `Markdown`        |
 
-### Output
+### Output (optional)
 
 | Action      | Description         |
 | ----------- | ------------------- |
@@ -79,7 +77,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - uses: arpitBhalla/lerna-changelog-action@master
+      - uses: arpitBhalla/monorepo-changelog@master
         id: changelog
         with:
           GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
@@ -169,6 +167,8 @@ Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{log
 ```
 
 ### Output for this template
+
+See [Ouput](#output)
 
 ## Acknowledgements
 

@@ -1,5 +1,5 @@
 name: "Monorepo changelog with template"
-description: "Generate changelog for multi-scope projects (monorepos) lerna supported"
+description: "Generate PR based changelog or release-notes for multi-scope projects with templates"
 author: "arpitBhalla"
 branding:
   icon: "file-text"
@@ -39,4 +39,4 @@ outputs:
     description: "Generated changelog"
 runs:
   using: "node16"
-  main: "src/index.ts"
+  main: "lib/index.js"

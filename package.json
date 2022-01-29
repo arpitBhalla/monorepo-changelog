@@ -1,11 +1,7 @@
 {
   "name": "lerna-changelog",
-  "version": "2.2.0",
+  "version": "0.0.1",
   "description": "Generate a changelog for a lerna monorepo",
-  "keywords": [
-    "changelog",
-    "lerna"
-  ],
   "license": "MIT",
   "scripts": {
     "build": "yarn clean && tsc",
