@@ -8,15 +8,20 @@ import { load as loadConfig } from "./configuration";
 import ConfigurationError from "./configuration-error";
 import { defaultTemplate } from "./defaultTemplate";
 
-import { getInput, setOutput, setFailed } from "@actions/core";
+import { getInput as getInputCore, setOutput, setFailed, getMultilineInput, info, InputOptions } from "@actions/core";
+import { ActionKeyT } from "./actions.yml";
 
 const NEXT_VERSION_DEFAULT = "Unreleased";
+
+const getInput = (key: ActionKeyT, options?: InputOptions | undefined) => {
+  return getInputCore(key, options);
+};
 
 export async function run() {
   const from = getInput("from", { required: true });
   const to = getInput("to", { required: true });
-  const userTemplate = getInput("template", { required: false });
-  const nextVersion = getInput("nextVersion", { required: false });
+  const userTemplate = getMultilineInput("template", { required: false, trimWhitespace: true });
+  const nextVersion = getInput("version_name", { required: false });
   const repo = getInput("repo", { required: false });
 
   let options = {

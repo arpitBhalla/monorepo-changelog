@@ -5,31 +5,35 @@ branding:
   icon: "file-text"
   color: "blue"
 inputs:
+  GITHUB_AUTH:
+    description: "Personal Access Token with read permission"
+    required: true
+    default: ""
   from:
-    description: "A commit SHA or tag"
+    description: "The current version of the project.(SHA or Tag)"
     required: false
+    default: ""
   to:
-    description: "A commit SHA or tag"
+    description: "The next version of the project.(SHA or Tag)"
     required: false
-    default: HEAD
+    default: ""
   template:
-    description: "Handlebar template for changelog"
+    description: "Handlebar template for Changelog"
     required: false
-  nextVersion:
-    description: "Version name for next release"
+    default: "DefaultTemplate"
+  version_name:
+    description: "Version Name for current release"
     required: false
     default: "Unreleased"
-  # groupBy:
-  #   description: "label | scope"
-  #   required: false
-  #   default: "scopes"
+  repo:
+    description: "Url of repo"
+    required: false
+    default: ""
   language:
-    description: "Language of changelog"
+    description: "Language of the changelog"
     required: false
     default: "Markdown"
-  repo:
-    description: ""
-    required: false
+
 outputs:
   changelog:
     description: "Generated changelog"
