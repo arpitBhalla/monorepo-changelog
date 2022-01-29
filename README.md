@@ -1,5 +1,3 @@
-# Github Action for Changelog
-
 ## Generate template based changelog or release-notes for multi-scope projects
 
 Use `lerna-changelog` in GitHub action.
