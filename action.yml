@@ -1,5 +1,5 @@
-name: "Generate changelog for multi-scope projects (monorepos) lerna supported"
-description: "Lerna Monorepo Changelog Generator"
+name: "Monorepo changelog with template"
+description: "Generate changelog for multi-scope projects (monorepos) lerna supported"
 author: "arpitBhalla"
 branding:
   icon: "file-text"
