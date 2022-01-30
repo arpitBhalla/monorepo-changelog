@@ -100182,7 +100182,7 @@ function run() {
         const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
         const from = getInput("from", { required: false });
         const to = getInput("to", { required: false });
-        const userTemplate = (0, core_1.getMultilineInput)("template", { required: false, trimWhitespace: true });
+        const userTemplate = (0, core_1.getMultilineInput)("template", { required: false, trimWhitespace: true }).join("\n");
         const nextVersion = getInput("version_name", { required: false });
         const repo = getInput("repo", { required: false });
         let options = {
@@ -100200,6 +100200,7 @@ function run() {
             }
             let template = (0, handlebars_1.compile)(userTemplate || defaultTemplate_1.defaultTemplate);
             let result = yield new changelog_1.default(config).createMarkdown(options);
+            (0, core_1.info)(JSON.stringify(result, null, 2));
             let highlighted = (0, cli_highlight_1.highlight)(template(result), {
                 language: "Markdown",
                 theme: {

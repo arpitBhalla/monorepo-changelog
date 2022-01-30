@@ -21,7 +21,7 @@ export async function run() {
   const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
   const from = getInput("from", { required: false });
   const to = getInput("to", { required: false });
-  const userTemplate = getMultilineInput("template", { required: false, trimWhitespace: true });
+  const userTemplate = getMultilineInput("template", { required: false, trimWhitespace: true }).join("\n");
   const nextVersion = getInput("version_name", { required: false });
   const repo = getInput("repo", { required: false });
 
@@ -44,6 +44,8 @@ export async function run() {
 
     let template = compile(userTemplate || defaultTemplate);
     let result = await new Changelog(config).createMarkdown(options);
+
+    info(JSON.stringify(result, null, 2));
 
     let highlighted = highlight(template(result), {
       language: "Markdown",
