@@ -99649,6 +99649,7 @@ class Changelog {
             baseIssueUrl: this.github.getBaseIssueUrl(this.config.repo),
             unreleasedName: this.config.nextVersion || "Unreleased",
             scopes: this.config.scopes,
+            groupBy: this.config.groupBy,
         });
     }
     createMarkdown(options = {}) {
@@ -99895,6 +99896,7 @@ function fromPath(rootPath, options = {}) {
         ignoreCommitters,
         cacheDir,
         scopes,
+        groupBy: config.groupBy || "labels",
     };
 }
 exports.fromPath = fromPath;
@@ -99954,15 +99956,15 @@ exports.defaultTemplate = `
 
 __{{releaseDate}}__
 
-{{#each labels}}
+{{#each contribution}}
 
 ###  {{ name }}
 
-{{#each scopes }}
+{{#each changes}}
 
 #### \`{{name}}\`
 
-{{#each changes}}
+{{#each commits}}
 - [#{{id}}]({{html_url}}) {{title}} by @{{author}}
 {{/each}}
 {{/each}}
@@ -100180,6 +100182,7 @@ const getInput = (key, options) => {
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
+        const groupBy = getInput("group-by", { required: false });
         const from = getInput("from", { required: false });
         const to = getInput("to", { required: false });
         const userTemplate = (0, core_1.getMultilineInput)("template", { required: false, trimWhitespace: true }).join("\n");
@@ -100195,6 +100198,7 @@ function run() {
                 repo,
             });
             config.GITHUB_AUTH = GITHUB_AUTH;
+            config.groupBy = groupBy || "labels";
             if (nextVersion !== NEXT_VERSION_DEFAULT) {
                 config.nextVersion = nextVersion;
             }
@@ -100244,50 +100248,66 @@ class MarkdownRenderer {
         return releases.map(release => this.renderRelease(release));
     }
     renderRelease(release) {
-        var _a, _b;
+        var _a;
         const categories = this.groupByCategory(release.commits);
         const categoriesWithCommits = categories.filter(category => category.commits.length > 0);
         if (categoriesWithCommits.length === 0)
             return {};
         const releaseTitle = release.name === UNRELEASED_TAG ? this.options.unreleasedName : release.name;
-        const ee = { labels: [], contributors: [] };
-        ee.releaseTitle = releaseTitle;
-        ee.releaseDate = release.date;
-        for (const category of categoriesWithCommits) {
-            let f;
-            if (this.hasPackages(category.commits)) {
-                f = this.renderContributionsByPackage(category.commits);
-            }
-            (_a = ee.labels) === null || _a === void 0 ? void 0 : _a.push({
-                name: category.name,
-                scopes: f,
-            });
+        const changelog = { contribution: [], contributors: [] };
+        changelog.releaseTitle = releaseTitle;
+        changelog.releaseDate = release.date;
+        changelog.contribution = this.renderContributionByKey(release.commits, this.options.groupBy);
+        if ((_a = release.contributors) === null || _a === void 0 ? void 0 : _a.length) {
+            changelog.contributors = release.contributors;
+            changelog.contributorCount = release.contributors.length;
         }
-        if ((_b = release.contributors) === null || _b === void 0 ? void 0 : _b.length) {
-            ee.contributors = release.contributors;
-            ee.contributorCount = release.contributors.length;
-        }
-        return ee;
+        return changelog;
     }
-    renderContributionsByPackage(commits) {
-        const commitsByPackage = {};
+    renderContributionByKey(commits, groupByKey, restGroupByKey = groupByKey !== "labels" ? "labels" : "scopes") {
+        var _a, _b, _c, _d;
+        const groupedChangeLog = {};
         for (const commit of commits) {
-            const changedPackages = commit.packages || [];
-            const packageName = this.renderPackageNames(changedPackages);
-            commitsByPackage[packageName] = commitsByPackage[packageName] || [];
-            commitsByPackage[packageName].push(commit);
+            const issue = commit.githubIssue;
+            if (issue && issue.number && ((_a = commit.categories) === null || _a === void 0 ? void 0 : _a.length) && issue.pull_request && issue.pull_request.html_url) {
+                const change = {
+                    labels: commit.categories || [],
+                    scopes: this.renderPackageNames(commit.packages || []) || [],
+                    id: issue.number,
+                    html_url: issue.pull_request.html_url || "",
+                    title: issue.title,
+                    author: issue.user.login,
+                };
+                const key1 = ((_b = change[groupByKey]) === null || _b === void 0 ? void 0 : _b.join(", ")) || "Unlabeled";
+                const key2 = ((_c = change[restGroupByKey]) === null || _c === void 0 ? void 0 : _c.join(", ")) || "";
+                if (!groupedChangeLog[key1]) {
+                    groupedChangeLog[key1] = {
+                        name: key1,
+                        changes: [],
+                    };
+                }
+                const index = groupedChangeLog[key1].changes.findIndex(c => c.name === key2);
+                const ChangeCommit = {
+                    id: change.id,
+                    title: change.title,
+                    author: change.author,
+                    html_url: change.html_url,
+                };
+                if (index === -1) {
+                    groupedChangeLog[key1].changes.push({
+                        name: ((_d = change === null || change === void 0 ? void 0 : change[restGroupByKey]) === null || _d === void 0 ? void 0 : _d.join(", ")) || "Other",
+                        commits: [ChangeCommit],
+                    });
+                }
+                else {
+                    groupedChangeLog[key1].changes[index].commits.push(ChangeCommit);
+                }
+            }
         }
-        const packageNames = Object.keys(commitsByPackage);
-        return packageNames.map(packageName => {
-            const pkgCommits = commitsByPackage[packageName];
-            return {
-                name: packageName,
-                changes: this.renderContributionList(pkgCommits, " "),
-            };
-        });
+        return Object.values(groupedChangeLog);
     }
     renderPackageNames(packageNames) {
-        return packageNames.length > 0 ? packageNames.map(pkg => this.options.scopes[pkg]).join(", ") : "Other";
+        return (packageNames === null || packageNames === void 0 ? void 0 : packageNames.length) > 0 ? packageNames.map(pkg => this.options.scopes[pkg]).filter(Boolean) : ["Other"];
     }
     renderContributionList(commits, prefix = "") {
         const isCommit = (commit) => commit !== undefined;
