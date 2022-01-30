@@ -78,7 +78,7 @@ jobs:
         with:
           fetch-depth: 0
       - uses: arpitBhalla/monorepo-changelog@master
-        id: changelog
+        id: generate
         with:
           GITHUB_AUTH: "${{ secrets.GITHUB_TOKEN }}"
           from: "1.2.0"
@@ -100,7 +100,7 @@ jobs:
 
             Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{login}}]({{url}}){{#unless @last}},{{/unless}} {{/each}}
             {{/each }}
-      - run: echo "${{steps.changelog.outputs.markdown}}"
+      - run: echo "${{steps.generate.outputs.changelog}}"
 ```
 
 ### Output
