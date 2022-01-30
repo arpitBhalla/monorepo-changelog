@@ -45,8 +45,6 @@ export async function run() {
     let template = compile(userTemplate || defaultTemplate);
     let result = await new Changelog(config).createMarkdown(options);
 
-    info(JSON.stringify(result, null, 2));
-
     let highlighted = highlight(template(result), {
       language: "Markdown",
       theme: {

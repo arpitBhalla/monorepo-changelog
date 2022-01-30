@@ -99969,7 +99969,7 @@ __{{releaseDate}}__
 ---
 {{/each}}
 
-Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{login}}]({{url}}){{#unless @last}},{{/unless}} {{/each}}
+Thanks to {{contributorCount}} contributors namely {{#each contributors}}@{{login}}{{#unless @last}},{{/unless}} {{/each}}
 
 {{/each }}
 `;
@@ -100200,7 +100200,6 @@ function run() {
             }
             let template = (0, handlebars_1.compile)(userTemplate || defaultTemplate_1.defaultTemplate);
             let result = yield new changelog_1.default(config).createMarkdown(options);
-            (0, core_1.info)(JSON.stringify(result, null, 2));
             let highlighted = (0, cli_highlight_1.highlight)(template(result), {
                 language: "Markdown",
                 theme: {

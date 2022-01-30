@@ -20,7 +20,7 @@ __{{releaseDate}}__
 ---
 {{/each}}
 
-Thanks to {{contributorCount}} contributors namely {{#each contributors}}[@{{login}}]({{url}}){{#unless @last}},{{/unless}} {{/each}}
+Thanks to {{contributorCount}} contributors namely {{#each contributors}}@{{login}}{{#unless @last}},{{/unless}} {{/each}}
 
 {{/each }}
 `;
