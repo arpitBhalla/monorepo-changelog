@@ -20,7 +20,6 @@ inputs:
   template:
     description: "Handlebar template for Changelog"
     required: false
-    default: "DefaultTemplate"
   version_name:
     description: " Title for unreleased commits (e.g. Unreleased)"
     required: false

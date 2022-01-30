@@ -43,7 +43,7 @@ export const actions: ActionT[] = [
     description: "Handlebar template for Changelog",
     type: "string",
     required: false,
-    default: "DefaultTemplate",
+    default: "",
   },
   {
     name: "version_name",

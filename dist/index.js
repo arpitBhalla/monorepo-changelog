@@ -100206,7 +100206,7 @@ function run() {
                     link: chalk.dim,
                 },
             });
-            console.log(highlighted);
+            (0, core_1.info)(highlighted);
             (0, core_1.setOutput)("changelog", highlighted);
         }
         catch (e) {
@@ -100221,6 +100221,7 @@ function run() {
     });
 }
 exports.run = run;
+run();
 
 
 /***/ }),

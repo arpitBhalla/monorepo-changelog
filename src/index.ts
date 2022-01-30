@@ -51,7 +51,7 @@ export async function run() {
       },
     });
 
-    console.log(highlighted);
+    info(highlighted);
     setOutput("changelog", highlighted);
   } catch (e) {
     if (e instanceof ConfigurationError) {
@@ -63,3 +63,5 @@ export async function run() {
     process.exitCode = 1;
   }
 }
+
+run();

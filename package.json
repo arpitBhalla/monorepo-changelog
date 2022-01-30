@@ -4,7 +4,7 @@
   "description": "Generate a changelog for a lerna monorepo",
   "license": "MIT",
   "scripts": {
-    "build": "yarn clean && tsc",
+    "build": "ncc build src/index.ts",
     "changelog": "node ./bin/cli.js",
     "clean": "rimraf lib",
     "fix": "yarn lint -- --fix",
