@@ -39,4 +39,4 @@ outputs:
     description: "Generated changelog"
 runs:
   using: "node16"
-  main: "lib/index.js"
+  main: "dist/index.js"
