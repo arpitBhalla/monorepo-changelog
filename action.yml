@@ -5,33 +5,47 @@ branding:
   icon: "file-text"
   color: "blue"
 inputs:
+  ## actions-start
   GITHUB_AUTH:
     description: "Personal Access Token with read permission"
     required: true
     default: ""
+
+  group-by:
+    description: ""
+    required: false
+    default: "labels"
+
   from:
     description: "The current version of the project (SHA or Tag)"
     required: false
     default: ""
+
   to:
     description: "The next version of the project (SHA or Tag)"
     required: false
     default: ""
+
   template:
     description: "Handlebar template for Changelog"
     required: false
+    default: ""
+
   version_name:
     description: " Title for unreleased commits (e.g. Unreleased)"
     required: false
     default: "Unreleased"
+
   repo:
     description: "Your `org/repo` on GitHub (automatically inferred from the package.json file)"
     required: false
     default: ""
+
   language:
     description: "Language of the changelog"
     required: false
     default: "Markdown"
+## actions-end
 
 outputs:
   changelog:

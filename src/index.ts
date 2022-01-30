@@ -19,6 +19,7 @@ const getInput = (key: ActionKeyT, options?: InputOptions | undefined) => {
 
 export async function run() {
   const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
+  const groupBy = getInput("group-by", { required: false });
   const from = getInput("from", { required: false });
   const to = getInput("to", { required: false });
   const userTemplate = getMultilineInput("template", { required: false, trimWhitespace: true }).join("\n");
@@ -37,6 +38,7 @@ export async function run() {
     });
 
     config.GITHUB_AUTH = GITHUB_AUTH;
+    config.groupBy = (groupBy as "labels" | "scopes") || "labels";
 
     if (nextVersion !== NEXT_VERSION_DEFAULT) {
       config.nextVersion = nextVersion;

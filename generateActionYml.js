@@ -6,32 +6,24 @@ const TAB = "  ";
 /**
  * Action YML
  */
-let YMLFormat = `name: "Generate changelog for multi-scope projects (monorepos) lerna supported"
-description: "Lerna Monorepo Changelog Generator"
-author: "arpitBhalla"
-branding:
-${TAB}icon: "file-text"
-${TAB}color: "blue"
-inputs:
-`;
+let YMLFormat = "";
 
 actions.forEach(action => {
-  YMLFormat += `${TAB}${action.name}:
+  YMLFormat += `
+${TAB}${action.name}:
 ${TAB}${TAB}description: "${action.description}"
 ${TAB}${TAB}required: ${action.required}
 ${TAB}${TAB}default: "${action.default}"
 `;
 });
 
-YMLFormat += `
-outputs:
-  changelog:
-    description: "Generated changelog"
-runs:
-  using: "node16"
-  main: "src/index.ts"`;
+const YML = readFileSync("action.yml").toString();
+const startYMLIndex = YML.indexOf("## actions-start") + "## actions-start".length;
+const endYMLIndex = YML.indexOf("## actions-end");
 
-writeFileSync("action.yml", YMLFormat);
+const NewYML = YML.slice(0, startYMLIndex) + YMLFormat + YML.slice(endYMLIndex);
+
+writeFileSync("action.yml", NewYML);
 console.log("action.yml created");
 
 /**

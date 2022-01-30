@@ -7,6 +7,7 @@ type ActionT = {
 };
 
 export type ActionKeyT =
+  | "group-by"
   | "from"
   | "to"
   | "template"
@@ -23,6 +24,13 @@ export const actions: ActionT[] = [
     type: "string",
     required: true,
     default: "",
+  },
+  {
+    name: "group-by",
+    default: "labels",
+    description: "",
+    required: false,
+    type: "string",
   },
   {
     name: "from",

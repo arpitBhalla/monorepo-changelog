@@ -37,25 +37,22 @@ You can configure by adding a changelog key to the package.json file of your pro
 ```
 
 <!--input-start--->
-
 ### Input
+| Action | Description | Default |
+| ------ | ----------- | ------- |
+| `GITHUB_AUTH` **(required)**| Personal Access Token with read permission |  |
+| `group-by` |  | `labels` |
+| `from` | The current version of the project (SHA or Tag) |  |
+| `to` | The next version of the project (SHA or Tag) |  |
+| `template` | Handlebar template for Changelog |  |
+| `version_name` |  Title for unreleased commits (e.g. Unreleased) | `Unreleased` |
+| `repo` | Your `org/repo` on GitHub (automatically inferred from the package.json file) |  |
+| `language` | Language of the changelog | `Markdown` |
 
-| Action                       | Description                                                                   | Default           |
-| ---------------------------- | ----------------------------------------------------------------------------- | ----------------- |
-| `GITHUB_AUTH` **(required)** | Personal Access Token with read permission                                    |                   |
-| `from`                       | The current version of the project (SHA or Tag)                               |                   |
-| `to`                         | The next version of the project (SHA or Tag)                                  |                   |
-| `template`                   | Handlebar template for Changelog                                              | `DefaultTemplate` |
-| `version_name`               | Title for unreleased commits (e.g. Unreleased)                                | `Unreleased`      |
-| `repo`                       | Your `org/repo` on GitHub (automatically inferred from the package.json file) |                   |
-| `language`                   | Language of the changelog                                                     | `Markdown`        |
-
-### Output (optional)
-
-| Action      | Description         |
-| ----------- | ------------------- |
+### Output
+| Action | Description |
+| ------ | ----------- |
 | `changelog` | Generated changelog |
-
 <!--input-end--->
 
 ## Example
