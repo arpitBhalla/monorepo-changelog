@@ -29,6 +29,7 @@ export default class Changelog {
       baseIssueUrl: this.github.getBaseIssueUrl(this.config.repo),
       unreleasedName: this.config.nextVersion || "Unreleased",
       scopes: this.config.scopes,
+      groupBy: this.config.groupBy,
     });
   }
 

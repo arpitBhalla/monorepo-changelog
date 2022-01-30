@@ -16,6 +16,7 @@ export interface Configuration {
   nextVersion: string | undefined;
   nextVersionFromMetadata?: boolean;
   GITHUB_AUTH?: string;
+  groupBy: "labels" | "scopes";
 }
 
 export interface ConfigLoaderOptions {
@@ -87,6 +88,7 @@ export function fromPath(rootPath: string, options: ConfigLoaderOptions = {}): C
     ignoreCommitters,
     cacheDir,
     scopes,
+    groupBy: config.groupBy || "labels",
   };
 }
 

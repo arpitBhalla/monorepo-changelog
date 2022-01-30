@@ -5,15 +5,15 @@ export const defaultTemplate = `
 
 __{{releaseDate}}__
 
-{{#each labels}}
+{{#each contribution}}
 
 ###  {{ name }}
 
-{{#each scopes }}
+{{#each changes}}
 
 #### \`{{name}}\`
 
-{{#each changes}}
+{{#each commits}}
 - [#{{id}}]({{html_url}}) {{title}} by @{{author}}
 {{/each}}
 {{/each}}

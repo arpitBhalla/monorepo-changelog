@@ -1,15 +1,11 @@
 import { GitHubIssueResponse, GitHubUserResponse } from "./github-api";
 
-export type SCOPE_CHANGE = {
-  id: number;
-  title: string;
-  author: string;
-  html_url: string;
-};
-
-export type SCOPES = {
+export type GroupedChanges = {
   name: string;
-  changes: SCOPE_CHANGE[];
+  changes: {
+    name: string;
+    commits: TCommit[];
+  }[];
 };
 
 export type Changelog = Partial<{
@@ -17,11 +13,20 @@ export type Changelog = Partial<{
   releaseDate: string;
   contributors: GitHubUserResponse[];
   contributorCount: number;
-  labels: {
-    name?: string;
-    scopes?: SCOPES[];
-  }[];
+  contribution: GroupedChanges[];
 }>;
+
+export type TChange = {
+  labels?: string[];
+  scopes?: string[];
+} & TCommit;
+
+export type TCommit = {
+  id: number;
+  title: string;
+  author: string;
+  html_url: string;
+};
 
 export interface CommitInfo {
   commitSHA: string;
