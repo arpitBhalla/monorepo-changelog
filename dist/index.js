@@ -100107,7 +100107,7 @@ const fetch_1 = __nccwpck_require__(73487);
 class GithubAPI {
     constructor(config) {
         this.cacheDir = config.cacheDir && path.join(config.rootPath, config.cacheDir, "github");
-        this.auth = this.getAuthToken();
+        this.auth = config.GITHUB_AUTH || "";
         if (!this.auth) {
             throw new configuration_error_1.default("Must provide GITHUB_AUTH");
         }
@@ -100179,8 +100179,9 @@ const getInput = (key, options) => {
 };
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const from = getInput("from", { required: true });
-        const to = getInput("to", { required: true });
+        const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
+        const from = getInput("from", { required: false });
+        const to = getInput("to", { required: false });
         const userTemplate = (0, core_1.getMultilineInput)("template", { required: false, trimWhitespace: true });
         const nextVersion = getInput("version_name", { required: false });
         const repo = getInput("repo", { required: false });
@@ -100193,6 +100194,7 @@ function run() {
                 nextVersionFromMetadata: false,
                 repo,
             });
+            config.GITHUB_AUTH = GITHUB_AUTH;
             if (nextVersion !== NEXT_VERSION_DEFAULT) {
                 config.nextVersion = nextVersion;
             }

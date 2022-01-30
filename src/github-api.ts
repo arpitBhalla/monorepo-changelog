@@ -28,6 +28,7 @@ export interface Options {
   repo: string;
   rootPath: string;
   cacheDir?: string;
+  GITHUB_AUTH?: string;
 }
 
 export default class GithubAPI {
@@ -36,7 +37,7 @@ export default class GithubAPI {
 
   constructor(config: Options) {
     this.cacheDir = config.cacheDir && path.join(config.rootPath, config.cacheDir, "github");
-    this.auth = this.getAuthToken();
+    this.auth = config.GITHUB_AUTH || "";
     if (!this.auth) {
       throw new ConfigurationError("Must provide GITHUB_AUTH");
     }

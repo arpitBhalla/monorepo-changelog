@@ -18,8 +18,9 @@ const getInput = (key: ActionKeyT, options?: InputOptions | undefined) => {
 };
 
 export async function run() {
-  const from = getInput("from", { required: true });
-  const to = getInput("to", { required: true });
+  const GITHUB_AUTH = getInput("GITHUB_AUTH", { required: false });
+  const from = getInput("from", { required: false });
+  const to = getInput("to", { required: false });
   const userTemplate = getMultilineInput("template", { required: false, trimWhitespace: true });
   const nextVersion = getInput("version_name", { required: false });
   const repo = getInput("repo", { required: false });
@@ -34,6 +35,8 @@ export async function run() {
       nextVersionFromMetadata: false,
       repo,
     });
+
+    config.GITHUB_AUTH = GITHUB_AUTH;
 
     if (nextVersion !== NEXT_VERSION_DEFAULT) {
       config.nextVersion = nextVersion;

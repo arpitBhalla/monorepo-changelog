@@ -15,6 +15,7 @@ export interface Configuration {
   cacheDir?: string;
   nextVersion: string | undefined;
   nextVersionFromMetadata?: boolean;
+  GITHUB_AUTH?: string;
 }
 
 export interface ConfigLoaderOptions {
